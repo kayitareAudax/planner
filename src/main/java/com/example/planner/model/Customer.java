@@ -17,14 +17,14 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "users")
-public class User implements UserDetails {
+@Table(name = "customer")
+public class Customer implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String names;
+    private String firstname;
     private String email;
-    private String telephone;
+    private String phone;
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;

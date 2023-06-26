@@ -1,8 +1,8 @@
 package com.example.planner;
 
 import com.example.planner.model.Role;
+import com.example.planner.service.CustomerService;
 import com.example.planner.service.RoleService;
-import com.example.planner.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +15,7 @@ public class PlannerApplication {
         SpringApplication.run(PlannerApplication.class, args);
     }
 //    @Bean
-//    CommandLineRunner runner(UserService userService, RoleService roleService){
+//    CommandLineRunner runner(CustomerService userService, RoleService roleService){
 //        return args -> {
 //            roleService.saveRole(new Role("USER"));
 //            roleService.saveRole(new Role("ADMIN"));

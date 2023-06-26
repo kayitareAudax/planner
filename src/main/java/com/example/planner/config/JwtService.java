@@ -1,7 +1,7 @@
 package com.example.planner.config;
 
 import com.example.planner.model.Role;
-import com.example.planner.repository.UserRepo;
+import com.example.planner.repository.CustomerRepo;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -24,7 +24,7 @@ import java.util.function.Function;
 @Slf4j
 public class JwtService {
     private final Environment environment;
-    private final UserRepo userRepo;
+    private final CustomerRepo customerRepo;
     public Claims extractClaims(String token){
         return Jwts.parserBuilder().setSigningKey(getSignInKey()).build().parseClaimsJws(token).getBody();
     }
@@ -58,6 +58,6 @@ public class JwtService {
     }
     public Role extractRoles(String token){
         String username=extractUsername(token);
-        return userRepo.findUserByEmail(username).getRole();
+        return customerRepo.findUserByEmail(username).getRole();
     }
 }

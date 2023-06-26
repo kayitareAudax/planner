@@ -1,6 +1,6 @@
 package com.example.planner.dto;
 
-import com.example.planner.model.User;
+import com.example.planner.model.Customer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,5 +13,6 @@ import lombok.NoArgsConstructor;
 public class AuthResponse {
     private String token;
     private String message;
-    private User user;
+    private boolean success;
+    private Customer user;
 }

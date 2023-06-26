@@ -1,11 +1,9 @@
 package com.example.planner.repository;
 
-import com.example.planner.model.Vehicle;
+import com.example.planner.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.UUID;
 @Repository
-public interface VehicleRepo extends JpaRepository<Vehicle, UUID> {
-
+public interface ProductRepo extends JpaRepository<Product,Long> {
 }

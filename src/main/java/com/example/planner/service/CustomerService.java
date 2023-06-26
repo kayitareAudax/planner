@@ -5,9 +5,9 @@ import com.example.planner.dto.AuthResponse;
 import com.example.planner.dto.LoginRequest;
 import com.example.planner.dto.RegisterRequest;
 import com.example.planner.model.Role;
-import com.example.planner.model.User;
+import com.example.planner.model.Customer;
 import com.example.planner.repository.RoleRepo;
-import com.example.planner.repository.UserRepo;
+import com.example.planner.repository.CustomerRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,32 +18,32 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 @Service
 @Slf4j
-public class UserService {
+public class CustomerService {
     private final PasswordEncoder passwordEncoder;
-    private final UserRepo userRepo;
+    private final CustomerRepo customerRepo;
     private final RoleRepo roleRepo;
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
     public AuthResponse registerUser(RegisterRequest request) {
         log.info("trying to register user");
-        var user = User.builder().email(request.getEmail()).names(request.getNames()).telephone(request.getTelephone()).password(passwordEncoder.encode(request.getPassword())).build();
-        User initial = userRepo.findUserByEmail(request.getEmail());
+        var user = Customer.builder().email(request.getEmail()).firstname(request.getFirstname()).phone(request.getPhone()).password(passwordEncoder.encode(request.getPassword())).build();
+        Customer initial = customerRepo.findUserByEmail(request.getEmail());
         log.info("initial User {}", initial);
         if (initial != null) {
-            return AuthResponse.builder().user(null).message("User already registered").token(null).build();
+            return AuthResponse.builder().user(null).success(false).message("User already registered").token(null).build();
         }
         Role role = roleRepo.findRoleByRoleName("USER");
         user.setRole(role);
-        userRepo.save(user);
+        customerRepo.save(user);
         var token = jwtService.generateToken(user);
-        return AuthResponse.builder().user(user).message("User registered successfully").token(token).build();
+        return AuthResponse.builder().user(user).success(true).message("User registered successfully").token(token).build();
     }
 
     public AuthResponse loginUser(LoginRequest request) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        var user = userRepo.findUserByEmail(request.getEmail());
+        var user = customerRepo.findUserByEmail(request.getEmail());
         var token = jwtService.generateToken(user);
-        return AuthResponse.builder().message("logged in successfully").token(token).user(user).build();
+        return AuthResponse.builder().message("logged in successfully").success(true).token(token).user(user).build();
     }
 }
