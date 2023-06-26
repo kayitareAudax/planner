@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
+@CrossOrigin()
 @RequestMapping("/products/{productId}/quantity")
 public class QuantityController {
 

@@ -17,13 +17,18 @@ public class Quantity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne
+    @JoinColumn(name = "product_id") // Specify the foreign key column
+    private Product product;
     private int quantity;
+
     private String operation;
-    private LocalDate date;
-
-    @OneToOne(mappedBy = "quantity")
-    private Purchased purchased;
-
-    @OneToMany(mappedBy = "quantity")
-    private List<Product> products;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
+    @PrePersist
+    public void prePersist() {
+        if (date == null) {
+            date = new Date();
+        }
+    }
 }

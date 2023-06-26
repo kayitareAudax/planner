@@ -1,5 +1,6 @@
 package com.example.planner.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,14 +21,23 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long code;
-    private String name;
-    private String productType;
-    private double price;
-    private LocalDate inDate;
-    @ManyToOne
-    @JoinColumn(name = "quantity_id")
-    private Quantity quantity;
 
+    private String name;
+
+    @Column(name = "product_type")
+    private String productType;
+
+    private double price;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "in_date")
+    private LocalDate inDate;
+
+    private String image;
+    @JsonIgnore
+    @OneToMany(mappedBy = "product")
+    private List<Purchased> purchases;
+    @JsonIgnore
     @OneToOne(mappedBy = "product")
-    private Purchased purchased;
+    private Quantity quantity;
 }

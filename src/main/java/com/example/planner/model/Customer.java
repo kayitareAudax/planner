@@ -20,8 +20,8 @@ import java.util.UUID;
 @Table(name = "customer")
 public class Customer implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String firstname;
     private String email;
     private String phone;

@@ -3,6 +3,7 @@ package com.example.planner.controller;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.example.planner.dto.ProductDTO;
+import com.example.planner.dto.ProductResponse;
 import com.example.planner.model.Product;
 import com.example.planner.service.ProductService;
 import jakarta.validation.Valid;
@@ -19,14 +20,15 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/")
+@CrossOrigin()
 @RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
     private final Cloudinary cloudinary;
 
-    @PostMapping("/add/")
+    @PostMapping("products/add/")
     public ResponseEntity<?> createProduct(@Valid @RequestBody ProductDTO productDTO,
                                            BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -44,8 +46,8 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Internal error occured");
         }
     }
-   @GetMapping("/")
-    public ResponseEntity<List<Product>> getProducts(){
+   @GetMapping("productsGet/")
+    public ResponseEntity<List<ProductResponse>> getProducts(){
         return ResponseEntity.ok(productService.getAllProducts());
    }
 
